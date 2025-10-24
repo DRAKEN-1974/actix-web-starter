@@ -104,4 +104,4 @@ MIT License
 * [sqlx](https://github.com/launchbadge/sqlx)
 * [argon2](https://github.com/RustCrypto/password-hashes)
 * [jsonwebtoken](https://github.com/Keats/jsonwebtoken)
-* [tracing]([https://github.com/to](https://github.com/to)
+* [tracing]([https://github.com/to](https://github.com/actix-tracing)
