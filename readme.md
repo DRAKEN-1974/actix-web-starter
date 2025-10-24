@@ -41,7 +41,7 @@ This repo provides a ready-to-use project structure that you can clone and start
 1. **Clone the repo**
 
 ```bash
-git clone https://github.com/<your-username>/actix-web-starter.git
+git clone https://github.com/DRAKEN_1974/actix-web-starter.git
 cd actix-web-starter
 ```
 
