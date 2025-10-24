@@ -1,5 +1,3 @@
-I can't directly generate a downloadable PDF here, but I can provide a PDF-ready file. You can copy this content into a Markdown editor or VS Code and export it as PDF.
-
 ---
 
 # Actix Web Starter Template
