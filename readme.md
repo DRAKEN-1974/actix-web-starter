@@ -1,12 +1,12 @@
----
+# Actix Web Starter Template 🚀
 
-# Actix Web Starter Template
-
-A minimal **Actix Web** boilerplate for building Rust backend APIs with **PostgreSQL** integration and **JWT authentication**.
+A minimal **Actix Web** boilerplate for building Rust backend APIs with **PostgreSQL** (or Supabase) integration and **JWT authentication**.
 
 This repo provides a ready-to-use project structure that you can clone and start building your web applications or APIs immediately.
 
-## Features
+---
+
+## Features ✅
 
 * Actix Web backend setup
 * PostgreSQL connection using `sqlx`
@@ -14,16 +14,29 @@ This repo provides a ready-to-use project structure that you can clone and start
 * Password hashing with `argon2`
 * Request logging with `tracing` and `tracing-actix-web`
 * Basic `/index`, `/register`, and `/login` endpoints
-* Easy to extend for more routes, middleware, or services
+* Easy to extend for protected routes, middleware, or additional services
+* Ready for Docker (optional)
+* Example `.env.example` for quick setup
 
-## Prerequisites
+---
+
+## Badges
+
+![Rust](https://img.shields.io/badge/rust-1.71+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+---
+
+## Prerequisites ⚙️
 
 * Rust (latest stable)
 * Cargo
-* PostgreSQL (or Supabase connection string)
+* PostgreSQL or Supabase database
 * `dotenv` for environment variables
 
-## Getting Started
+---
+
+## Getting Started 🏁
 
 1. **Clone the repo**
 
@@ -34,7 +47,13 @@ cd actix-web-starter
 
 2. **Create a `.env` file**
 
-Example `.env` file:
+Copy the example file:
+
+```bash
+cp .env.example .env
+```
+
+Fill in your credentials:
 
 ```env
 DATABASE_URL=your-supabase-or-postgres-link
@@ -43,7 +62,15 @@ JWT_SECRET=your_super_secret_key
 
 > Note: Users can replace the `DATABASE_URL` with their own Supabase or PostgreSQL link.
 
-3. **Run the project**
+3. **(Optional) Docker Setup**
+
+Run PostgreSQL via Docker:
+
+```bash
+docker-compose up -d
+```
+
+4. **Run the project**
 
 ```bash
 cargo run
@@ -51,7 +78,9 @@ cargo run
 
 Server will start at `http://127.0.0.1:8080`.
 
-## API Endpoints
+---
+
+## API Endpoints 🛠️
 
 ### GET `/index`
 
@@ -84,24 +113,55 @@ Server will start at `http://127.0.0.1:8080`.
 
 * Returns a JWT token if credentials are correct.
 
-## Usage
+### Example Protected Route `/protected`
+
+* Add this in your `main.rs` to test JWT verification:
+
+```rust
+#[get("/protected")]
+async fn protected(req: HttpRequest) -> impl Responder {
+    let auth_header = req.headers().get("Authorization").unwrap().to_str().unwrap();
+    if auth_header.starts_with("Bearer ") {
+        let token = &auth_header[7..];
+        match verify_jwt(token) {
+            Ok(claims) => HttpResponse::Ok().body(format!("Hello, {}", claims.sub)),
+            Err(_) => HttpResponse::Unauthorized().body("Invalid token"),
+        }
+    } else {
+        HttpResponse::Unauthorized().body("Missing token")
+    }
+}
+```
+
+> This demonstrates how to create protected endpoints using JWT.
+
+---
+
+## Usage 💡
 
 * Clone and reuse as a **starter template** for your own Actix Web projects.
 * Extend with **protected routes** by verifying JWT tokens using `verify_jwt()`.
 * Add new **API endpoints**, services, or database models as needed.
+* Ideal for **learning Actix Web, Rust, and JWT integration**.
 
-## Contributing
+---
+
+## Contributing 🤝
 
 Contributions are welcome! Open issues, submit pull requests, or suggest new features.
 
-## License
+---
+
+## License 📄
 
 MIT License
 
-## Acknowledgements
+---
 
-* [Actix Web](https://actix.rs/)
-* [sqlx](https://github.com/launchbadge/sqlx)
-* [argon2](https://github.com/RustCrypto/password-hashes)
-* [jsonwebtoken](https://github.com/Keats/jsonwebtoken)
-* [tracing]([https://github.com/to](https://github.com/actix-tracing)
+## Acknowledgements 🙏
+
+* [Actix Web](https://actix.rs/) – The web framework used
+* [sqlx](https://github.com/launchbadge/sqlx) – Async SQL toolkit
+* [argon2](https://github.com/RustCrypto/password-hashes) – Password hashing
+* [jsonwebtoken](https://github.com/Keats/jsonwebtoken) – JWT handling
+* [tracing](https://github.com/tokio-rs/tracing) – S
